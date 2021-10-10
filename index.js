@@ -1,14 +1,22 @@
 const express = require('express')
-const app = express()
+const fileUpload = require('express-fileupload')
+const cors = require('cors');
+const jwt = require('jsonwebtoken')
 const controller = require('./controller/controller')
+
+
+//configs
+const app = express()
 
 app.use(express.json());
 
+app.use(fileUpload({
+  createParentPath: true
+}))
 
+app.use(cors())
 
 //jwt info
-
-const jwt = require('jsonwebtoken')
 const { json_key } = require('./configs/configs')
 middelware_jwt = express.Router();
 
@@ -29,6 +37,7 @@ middelware_jwt.use((req, res, next) => {
   }
 })
 
+//Routes
 app.post('/login', middelware_jwt, async (req, res) => {
   //validar si existe JWT -> se usa desde el middelware
 
@@ -52,6 +61,24 @@ app.post('/login', middelware_jwt, async (req, res) => {
 app.post("/signin", async (req, res) => {
   let response = await controller.signin(req.body)
   response ? res.sendStatus(200) : res.sendStatus(404)
+})
+
+
+app.post("/uploadfile",(req,res)=>{
+  try{
+    let file = req.files.file
+    if(file.mimetype.toLowerCase() == "application/pdf"){
+      file.mv('./files/'+ Date.now()+"-"+req.body.id+".pdf")
+      res.sendStatus(200)
+    }else{
+      //console.log("formato incorrecto")
+      res.sendStatus(415)
+    }
+  }catch(err){
+      //console.log(err)
+      res.status(404).send("file not found")
+  }
+
 })
 
 app.listen(3000, () => {
