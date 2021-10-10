@@ -1,9 +1,11 @@
 const express = require('express')
 const fileUpload = require('express-fileupload')
+const mongoose = require('mongoose')
 const cors = require('cors');
+
 const jwt = require('jsonwebtoken')
 const controller = require('./controller/controller')
-
+require('./src/environment/environment');
 
 //configs
 const app = express()
@@ -15,6 +17,17 @@ app.use(fileUpload({
 }))
 
 app.use(cors())
+
+//mongoose Configs
+const url = environment.dataBaseUrl
+
+mongoose.connect(url,(err)=>{
+  if(err) return err
+
+  console.log("conected sucessfully to database")
+  
+})
+
 
 //jwt info
 const { json_key } = require('./configs/configs')
@@ -40,27 +53,33 @@ middelware_jwt.use((req, res, next) => {
 //Routes
 app.post('/login', middelware_jwt, async (req, res) => {
   //validar si existe JWT -> se usa desde el middelware
-
-  let response = await controller.login(req.body)
-  if (response.exist) {
-    res.json({
-      Status: 200,
-      payload: response.payload,
-      token: response.token,
-      user: response.user
-    })
-  } else {
-    res.sendStatus(404)
+  try{
+    let response = await controller.login(req.body)
+    if (response.exist) {
+      res.json({
+        Status: 200,
+        payload: response.payload,
+        token: response.token,
+        user: response.user
+      })
+    } else {
+      res.sendStatus(404)
+    }
+  }catch(err){
+    console.log("An error has ocurred",err)
   }
-
   //res.json(response.sessionInfo)
 
 })
 
 
 app.post("/signin", async (req, res) => {
-  let response = await controller.signin(req.body)
-  response ? res.sendStatus(200) : res.sendStatus(404)
+  try{
+    let response = await controller.signin(req.body)
+    response ? res.sendStatus(200) : res.sendStatus(404)
+  }catch(err){
+    console.log("se ha producido un error: "+ err)
+  }
 })
 
 

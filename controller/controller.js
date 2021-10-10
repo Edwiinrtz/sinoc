@@ -1,21 +1,28 @@
 require('../configs/configs')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const usuarios = require('../models/users')
+
 const { json_key } = require('../configs/configs')
 
-let users = require('../models/users.json')
-
-search = async (id) => {
-    found = false
+search = async (userId) => {
+    let found = false;
     info = {}
-    await users.map((element) => {
+    /*await users.map((element) => {
         //console.log(element)
         if (element.id == id) {
             info = element
             found = true
         }
-    })
-    return { found, info }
+    })*/
+    user = await usuarios.findOne({ 'id': userId }).exec()
+
+    if(user){
+        info = user
+        found = true
+    }
+    return {found, info}
+    
 }
 
 login = async (data) => {
@@ -26,7 +33,12 @@ login = async (data) => {
     sessionInfo = {
         exist
     }
-    matched = bcrypt.compare(data.pass,user.info.pass)
+    if(!user.info.password){
+        user.info.password = ""
+    }
+    matched = await bcrypt.compare(data.password, user.info.password)
+    
+    
     if (user.found && matched) {
         //console.log(user)
         exist = true
@@ -51,23 +63,13 @@ login = async (data) => {
 
 
 signin = async (data) => {
-    /*let name     = data.name;
-    let pass       = data.password
-    let id         = data.id
-    let email      = data.email
-    let eps        = data.eps
-    let birthday   = data.birthday
-    let expedition = data.expedition
-    let dir        = data.dir
-    let contact    = data.contact*/
-
-    
-
     let exist = await search(data.id)
+    //console.log(exist)
     if (!exist.found) {
-        hash = await bcrypt.hash(data.pass, 10)
-        data.pass = hash;
-        users.push(data)
+        hash = await bcrypt.hash(data.password, 10)
+        data.password = hash;
+        user = new usuarios(data)
+        user.save()
         //console.log(users)
         return true
     } else {
