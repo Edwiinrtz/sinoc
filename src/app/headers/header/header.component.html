@@ -1,20 +1,66 @@
-<mat-toolbar color="primary">
-  <ul>
-
-    <li *ngIf="!userIsAuthenticated">
-      <a routerLink= "/">Ingresar</a>
-    </li>
-
-    <li *ngIf="!userIsAuthenticated">
-      <a routerLink= "/registrarse">Registrarse</a>
-      </li>
-
-    <li *ngIf="userIsAuthenticated">
-      <a routerLink= "/dashboard">Dashboard</a>
-    </li>
-
-    <li *ngIf="userIsAuthenticated">
-      <button mat-button (click)="onLogout()">Cerrar sesión</button>
-      </li>
-  </ul>
+<!-- Creates a layout with a left-positioned sidenav and explicit content. -->
+<mat-toolbar class="ca_header">
+  <div>
+    <p>logo</p>
+  </div>
+  <div>
+    <p><button mat-button (click)="sidenav.toggle()">Toggle</button></p>
+  </div>
 </mat-toolbar>
+
+<mat-sidenav-container class="example-container" autosize>
+  <mat-sidenav #sidenav
+    mode="side"
+    opened=true
+    class="example-sidenav"
+    [fixedInViewport]="opcionesNavBar.fixed"
+    [fixedTopGap]="opcionesNavBar.top"
+    [fixedBottomGap]="opcionesNavBar.bottom">
+
+    <mat-nav-list>
+
+      <button class="ca_toggleNavList" mat-button (click)="sidenav.toggle()">Toggle</button>
+
+      <mat-list-item>
+        <a routerLink="/dashboard">Home</a>
+          <mat-icon mat-list-icon>home</mat-icon>
+      </mat-list-item>
+
+      <mat-list-item>
+        <a routerLink="/dashboard">Solicitar cita</a>
+          <mat-icon mat-list-icon>home</mat-icon>
+      </mat-list-item>
+
+      <mat-list-item>
+        <a routerLink="/dashboard">Solicitar orden</a>
+          <mat-icon mat-list-icon>home</mat-icon>
+      </mat-list-item>
+
+      <mat-list-item>
+        <a routerLink="/dashboard">Mis citas</a>
+          <mat-icon mat-list-icon>home</mat-icon>
+      </mat-list-item>
+
+      <mat-list-item>
+        <a routerLink="/dashboard">Mis ordenes</a>
+          <mat-icon mat-list-icon>home</mat-icon>
+      </mat-list-item>
+
+      <mat-list-item>
+        <a routerLink="/dashboard">Perfil</a>
+          <mat-icon mat-list-icon>home</mat-icon>
+      </mat-list-item>
+
+      <mat-list-item *ngIf="userIsAuthenticated">
+        <button mat-butto (click)="onLogout()">Cerrar sesión</button>
+          <mat-icon mat-list-icon>home</mat-icon>
+      </mat-list-item>
+
+    </mat-nav-list>
+
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+

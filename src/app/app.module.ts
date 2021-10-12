@@ -15,11 +15,13 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSidenavModule  } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
 
 //Importar modulos propios:: aplicacion
 import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent } from './auth/login/login.component';
-import { SingUpComponent } from './auth/singup/singup.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HeaderComponent } from './headers/header/header.component';
 
@@ -33,7 +35,6 @@ import { AuthInterceptor } from './auth/auth.interceptor';
     AppComponent,
     HeaderComponent,
     LoginComponent,
-    //SingUpComponent,
     DashboardComponent
   ],
   imports: [
@@ -51,7 +52,10 @@ import { AuthInterceptor } from './auth/auth.interceptor';
     MatTabsModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatSidenavModule,
+    MatListModule,
+    MatIconModule
   ],
   providers: [
     {
