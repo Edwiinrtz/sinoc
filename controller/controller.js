@@ -1,7 +1,11 @@
 require('../configs/configs')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+
+
+//importing models
 const usuarios = require('../models/users')
+const appointmentModel = require('../models/appointment')
 
 const { json_key } = require('../configs/configs')
 
@@ -77,7 +81,32 @@ signin = async (data) => {
         return false
     }
 }
+
+appointment = (data)=>{
+    try{
+        if(Object.keys(data).length!=5){
+            throw new Error("some information is missing or you're sending more than needed information")
+        }else{
+            let newAppointment = new appointmentModel(data);
+            newAppointment.save()
+            return {"done":true}    
+        }
+    }catch(err){
+        return {"done:":false,"message":"an error has ocurred while an appointment was being booked\n"+err}
+        
+    }
+}
+getAppointments = async () =>{
+    let appointments = await appointmentModel.find({}).exec()
+    
+    if(!appointments) return {"done":false,"message":"There are not booked appointments"}
+    
+    return {"done":true,"info":appointments}
+    
+}
 module.exports = {
     login: login,
-    signin: signin
+    signin: signin,
+    appointment: appointment,
+    getAppointments:getAppointments
 }

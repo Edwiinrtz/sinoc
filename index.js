@@ -83,6 +83,17 @@ app.post("/signin", async (req, res) => {
 })
 
 
+app.post("/newappointment",(req,res)=>{
+  //consultar disponibilidad del medico en la fecha y hora definidos
+    let response = controller.appointment(req.body)
+    response.done ? res.sendStatus(200) : res.status(400).send(response.message)
+})
+
+app.get("/appointments",async (req,res)=>{
+  let response = await controller.getAppointments()
+  response.done ? res.status(200).json(response.info) : res.status(400).send(response.message)
+})
+
 app.post("/uploadfile",(req,res)=>{
   try{
     let file = req.files.file
