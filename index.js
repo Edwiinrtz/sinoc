@@ -3,9 +3,9 @@ const fileUpload = require('express-fileupload')
 const mongoose = require('mongoose')
 const cors = require('cors');
 
-const jwt = require('jsonwebtoken')
-const controller = require('./controller/controller')
-require('./src/environment/environment');
+const jwt = require('jsonwebtoken');
+const controller = require('./controller/controller');
+require('./src/environments/environment');
 
 //configs
 const app = express()
@@ -19,13 +19,13 @@ app.use(fileUpload({
 app.use(cors())
 
 //mongoose Configs
-const url = environment.dataBaseUrl
+const url = environment.dataBaseUrl;
 
 mongoose.connect(url,(err)=>{
   if(err) return err
 
   console.log("conected sucessfully to database")
-  
+
 })
 
 
@@ -35,7 +35,7 @@ middelware_jwt = express.Router();
 
 middelware_jwt.use((req, res, next) => {
   token = req.headers['access-token']
-  
+
   if (token) {
     jwt.verify(token, json_key, (err, decoded) => {
       if (err) {
@@ -60,7 +60,8 @@ app.post('/login', middelware_jwt, async (req, res) => {
         Status: 200,
         payload: response.payload,
         token: response.token,
-        user: response.user
+        user: response.user,
+        expiresIn: 3600
       })
     } else {
       res.sendStatus(404)
