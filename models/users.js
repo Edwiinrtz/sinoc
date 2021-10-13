@@ -5,7 +5,7 @@ const usuariosSchema = new mongoose.Schema({
     
     name: String,
     lastNames:String,
-    id:Number, required: true, unique: true,
+    id: {type: Number, required: true, unique: true},
     issueDate:String,
     birthDate:String,
     eps:String,
