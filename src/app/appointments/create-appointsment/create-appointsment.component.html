@@ -1,0 +1,61 @@
+<form (submit)="createAppointment(singupForm)" #singupForm="ngForm">
+
+  <mat-form-field appearance="fill">
+    <mat-label>Sede</mat-label>
+    <mat-select name="singup_eps" #epsInput="ngModel" ngModel >
+      <mat-option *ngFor="let sede of sedes" [value]="sede.value">
+          {{sede.viewValue}}
+      </mat-option>
+  </mat-select>
+    <mat-error *ngIf="epsInput.invalid"> Ingresar un formato de correo válido. </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Tipo de consulta</mat-label>
+    <mat-select name="tipo_consulta" #tipoConsulta #consultaInput="ngModel" [(ngModel)]="selectedTipoConsulta.value" (selectionChange)="onSelectTipoConsulta($event.value)" required >
+      <mat-option *ngFor="let tipo_consulta of tiposConsultas" [value]="tipo_consulta.value">
+          {{tipo_consulta.viewValue}}
+      </mat-option>
+  </mat-select>
+  <mat-error *ngIf="consultaInput.invalid"> Seleccionar tipo de consulta </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" *ngIf="medicos?.length > 0">
+    <mat-label>Medico</mat-label>
+    <mat-select name="medico" #medicoInput="ngModel" (selectionChange)="onSelectMedico($event.value)" ngModel required>
+      <mat-option *ngFor="let medico of medicos" [value]="medico.value">
+          {{medico.viewValue}}
+      </mat-option>
+  </mat-select>
+  <mat-error *ngIf="medicoInput.invalid"> Seleccionar un doctor </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" *ngIf="horarios?.length > 0">
+    <mat-label>Escoge fecha</mat-label>
+    <input matInput [matDatepicker]="escogerFecha" name="singup_issueDate" #issueDateInput="ngModel" ngModel required>
+    <mat-datepicker-toggle matSuffix [for]="escogerFecha"></mat-datepicker-toggle>
+    <mat-datepicker #escogerFecha></mat-datepicker>
+    <mat-error *ngIf="issueDateInput.invalid"> Escoger una fecha válida </mat-error> <!-- Mensajes de error -->
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" *ngIf="horarios?.length > 0">
+    <mat-label>Horarios</mat-label>
+    <mat-select name="horarios" #horariosInput="ngModel" ngModel required>
+      <mat-option *ngFor="let horario of horarios" [value]="horario.value">
+          {{horario.viewValue}}
+      </mat-option>
+  </mat-select>
+  <mat-error *ngIf="horariosInput.invalid"> Seleccionar un horario </mat-error>
+  </mat-form-field>
+
+  <div *ngIf="horarios?.length == 0">
+    No hay horarios disponibles
+  </div>
+
+  <button
+  mat-flat-button
+  color="primary"
+  type="submit"> Registrarse </button>
+</form>
+
+<!-- *ngIf="medicos?.length > 0" -->

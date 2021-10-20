@@ -18,6 +18,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSidenavModule  } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTableModule } from '@angular/material/table';
 
 //Importar modulos propios:: aplicacion
 import { AppRoutingModule } from './app-routing.module';
@@ -29,13 +31,17 @@ import { HeaderComponent } from './headers/header/header.component';
 //Peticiones
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth/auth.interceptor';
+import { CreateAppointsmentComponent } from './appointments/create-appointsment/create-appointsment.component';
+import { MyAppointsmentsComponent } from './appointments/my-appointsments/my-appointsments.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     LoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    CreateAppointsmentComponent,
+    MyAppointsmentsComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +61,9 @@ import { AuthInterceptor } from './auth/auth.interceptor';
     MatNativeDateModule,
     MatSidenavModule,
     MatListModule,
-    MatIconModule
+    MatIconModule,
+    MatProgressSpinnerModule,
+    MatTableModule
   ],
   providers: [
     {

@@ -12,6 +12,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   userIsAuthenticated = false;
   private authListenerSubs: Subscription; //Observable del atributo private::authStatusListener | componente:authServices
+  public roluser;
+  public validar = false;
+  rolUser = '';
+  private rolUserObservable: Subscription;
 
   opcionesNavBar = {
     fixed: true,
@@ -28,6 +32,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
     .subscribe( isAuthenticated => {
       this.userIsAuthenticated = isAuthenticated;
     });
+
+    this.rolUser = this.authServices.getRolUser();
+    this.rolUserObservable = this.authServices.getRolStatusListener()
+    .subscribe( rol => {
+      this.rolUser = rol;
+    })
   }
 
   ngOnDestroy() {

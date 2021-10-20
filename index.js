@@ -55,6 +55,8 @@ app.post('/login', middelware_jwt, async (req, res) => {
   //validar si existe JWT -> se usa desde el middelware
   try{
     let response = await controller.login(req.body)
+
+    console.log("response.user" , response.user);
     if (response.exist) {
       res.json({
         Status: 200,
@@ -105,3 +107,4 @@ app.listen(3000, () => {
 
   console.log("Server has been started")
 })
+

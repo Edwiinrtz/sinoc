@@ -59,7 +59,7 @@ export class LoginComponent {
     if(form.invalid){
       return;
     }
-    const rolUser = "usuario"; //Todo usuario que se registra queda con rol usuario
+    const rolUser = "admin"; //Todo usuario que se registra queda con rol usuario
 
     console.log("formattedDate" ,  this.birthDate);
     console.log("formattedIssue" ,  this.issueDate);

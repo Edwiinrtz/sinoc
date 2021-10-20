@@ -1,5 +1,12 @@
 <ng-container>
-  <div>a</div>
-  <div>b</div>
+  <div class="container_usuario" *ngIf="rolUser == 'usuario'">
+    a
+  </div>
+  <div class="container_admin"  *ngIf="rolUser == 'admin'">
+    b
+
+  </div>
+
+  <div>{{idUser}}</div>
 
 </ng-container>

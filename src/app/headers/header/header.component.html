@@ -3,7 +3,7 @@
   <div>
     <p>logo</p>
   </div>
-  <div>
+  <div *ngIf="userIsAuthenticated">
     <p><button mat-button (click)="sidenav.toggle()">Toggle</button></p>
   </div>
 </mat-toolbar>
@@ -17,8 +17,7 @@
     [fixedTopGap]="opcionesNavBar.top"
     [fixedBottomGap]="opcionesNavBar.bottom">
 
-    <mat-nav-list>
-
+    <mat-nav-list *ngIf="userIsAuthenticated && rolUser == 'usuario'">
       <button class="ca_toggleNavList" mat-button (click)="sidenav.toggle()">Toggle</button>
 
       <mat-list-item>
@@ -27,17 +26,17 @@
       </mat-list-item>
 
       <mat-list-item>
-        <a routerLink="/dashboard">Solicitar cita</a>
+        <a routerLink="/appointment">Solicitar cita</a>
+          <mat-icon mat-list-icon>home</mat-icon>
+      </mat-list-item>
+
+      <mat-list-item>
+        <a routerLink="/my-appointments">Mis citas</a>
           <mat-icon mat-list-icon>home</mat-icon>
       </mat-list-item>
 
       <mat-list-item>
         <a routerLink="/dashboard">Solicitar orden</a>
-          <mat-icon mat-list-icon>home</mat-icon>
-      </mat-list-item>
-
-      <mat-list-item>
-        <a routerLink="/dashboard">Mis citas</a>
           <mat-icon mat-list-icon>home</mat-icon>
       </mat-list-item>
 
@@ -55,7 +54,20 @@
         <button mat-butto (click)="onLogout()">Cerrar sesión</button>
           <mat-icon mat-list-icon>home</mat-icon>
       </mat-list-item>
+    </mat-nav-list>
 
+    <mat-nav-list *ngIf="userIsAuthenticated && rolUser  == 'admin'">
+      <button class="ca_toggleNavList" mat-button (click)="sidenav.toggle()">Toggle</button>
+
+      <mat-list-item>
+        <a routerLink="/dashboard">Home</a>
+          <mat-icon mat-list-icon>home</mat-icon>
+      </mat-list-item>
+
+      <mat-list-item *ngIf="userIsAuthenticated">
+        <button mat-butto (click)="onLogout()">Cerrar sesión</button>
+          <mat-icon mat-list-icon>home</mat-icon>
+      </mat-list-item>
     </mat-nav-list>
 
   </mat-sidenav>

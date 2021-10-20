@@ -8,6 +8,8 @@ import { DashboardComponent } from "./dashboard/dashboard.component";
 
 //Modulo para proteger las rutas solo para usuarios con Token
 import { authGuard } from './auth/auth.guard';
+import { CreateAppointsmentComponent } from "./appointments/create-appointsment/create-appointsment.component";
+import { MyAppointsmentsComponent } from './appointments/my-appointsments/my-appointsments.component';
 
 const routes: Routes = [
   {
@@ -25,6 +27,16 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'appointment',
+    component: CreateAppointsmentComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'my-appointments',
+    component: MyAppointsmentsComponent,
     canActivate: [authGuard]
   }
 ];
