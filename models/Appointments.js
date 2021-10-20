@@ -8,6 +8,8 @@ const appointmentsSchema = new Schema({
     doctor:String,
     date:String,
     time:String,
+    status:String,
+
     
 })
 
