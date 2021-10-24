@@ -83,14 +83,24 @@ app.post("/signin", async (req, res) => {
 })
 
 
-app.post("/newappointment",(req,res)=>{
+app.post("/newquote",async (req,res)=>{
+  
+    let response = await controller.quote(req.body)
+    response.done ? res.sendStatus(200) : res.status(400).send(response.message)
+})
+app.post("/myQuotes",async (req,res)=>{
+  let response = await controller.getQuotes({id:req.body.id})
+  response.done ? res.status(200).json(response.info) : res.status(400).send(response.message)
+})
+
+app.post("/newAppointment", async (req,res)=>{
   //consultar disponibilidad del medico en la fecha y hora definidos
-    let response = controller.appointment(req.body)
+    let response = await controller.appointment(req.body)
     response.done ? res.sendStatus(200) : res.status(400).send(response.message)
 })
 
 app.get("/appointments",async (req,res)=>{
-  let response = await controller.getAppointments()
+  let response = await controller.getAppointments({status:"available"})
   response.done ? res.status(200).json(response.info) : res.status(400).send(response.message)
 })
 
