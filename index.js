@@ -84,9 +84,15 @@ app.post("/signin", async (req, res) => {
 
 
 app.post("/newquote",async (req,res)=>{
-  
     let response = await controller.quote(req.body)
     response.done ? res.sendStatus(200) : res.status(400).send(response.message)
+})
+/*
+  Delete quote module implementation
+*/
+app.delete("/delquote",async (req,res)=>{
+  let response = await controller.delQuote(req.body)
+  response.done ? res.status(200).send(response.info) : res.status(400).send(response.message)
 })
 app.post("/myQuotes",async (req,res)=>{
   let response = await controller.getQuotes({id:req.body.id})
