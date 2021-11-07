@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthData } from './auth-data.model';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -14,15 +14,20 @@ export class authServices {
   private token: string; //Almacena el valor del token
   private authStatusListener =  new Subject<boolean>(); //Observador
   private tokenTimer: any; //Tiempo actual del token al iniciar la sesión
-  private rolUser: string; //almacenar el rol del usuario
-  private idUser: string;
   private rolUserStatusListener = new Subject<string>();
 
   public valorRolTest = "admin"; //pruebas
 
   //Variables de info de cada usuario
-  private nameUser;
-  private addresUser;
+  private nameUser: string;
+  private addresUser: string;
+  private rolUser: string;
+  private idUser: string;
+  private lastNameUser: string;
+  private emailUser: string;
+  private landLineUser: string;
+  private birthDateUser: string;
+  private issueDateUser: string;
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -59,42 +64,62 @@ export class authServices {
     return this.idUser;
   }
 
+  getLastNameUser() {
+    return this.lastNameUser;
+  }
+
+  getEmailUser() {
+    return this.emailUser;
+  }
+
+  getLandLineUser() {
+    return this.landLineUser;
+  }
+
+  getBirthDateUser() {
+    return this.birthDateUser;
+  }
+
+  getIssueDate() {
+    return this.issueDateUser;
+  }
+
   //Metodo para crear usuarios
   createUser(
     name: string,
-    lastName: string,
+    lastNames: string,
     id: string,
     issueDate: string,
     birthDate: string,
     eps: string,
     address: string,
     email: string,
-    landLine: string,
+    landline: string,
     phoneNumber: string,
     rol: string,
     password: string,
   ) {
     const AuthData: AuthData = {
       name: name,
-      lastName: lastName,
+      lastNames: lastNames,
       id: id,
       issueDate: issueDate,
       birthDate: birthDate,
       eps: eps,
       address: address,
       email: email,
-      landLine: landLine,
+      landline: landline,
       phoneNumber: phoneNumber,
       rol: rol,
       password: password,
     };
 
-
     this.http.post('http://localhost:3000/signin', AuthData)
     .subscribe( (response) => {
-      console.log("Método crear usuario", response);
+      console.log("Usuario nuevo:", response);
     });
 
+    this.router.navigate(['/']); //Redireccionar login
   }
 
   //Metodo que crear el token:: Redirigir al /dashboard
@@ -106,7 +131,6 @@ export class authServices {
 
     this.http.post<{token: string, expiresIn: number, user: any}>('http://localhost:3000/login', AuthData)
     .subscribe( (response) => {
-      console.log("response" , response.user.info);
       const token = response.token; //Guardar el token que el servidor envia
       this.token = token; //guardarlo en la variable de la clase private::token
 
@@ -119,14 +143,20 @@ export class authServices {
         const expirationDate = new Date(now.getTime() + expireInDuration * 1000);
         const rolUser = response.user.info.rol;
         const idUser = response.user.info.id;
+        const nameUser = response.user.info.name;
+        const lastNameUser = response.user.info.lastNames;
+        const emailUser = response.user.info.email;
+        const landLineUser = response.user.info.landline;
+        const birthDateUser = response.user.info.birthDate;
+        const issueDateUser = response.user.info.issueDate;
         this.rolUser = rolUser;
         this.rolUserStatusListener.next(rolUser);
-        this.saveAuthData(token, expirationDate, rolUser, idUser);
+        this.saveAuthData(token, expirationDate, rolUser, idUser, nameUser, lastNameUser, emailUser, landLineUser, birthDateUser, issueDateUser);
 
         //Funciona:: borrar luego
         this.nameUser = response.user.info.name;
         this.addresUser = response.user.info.address;
-        this.router.navigate(['dashboard']); //Redireccionar al /dashboard
+        this.router.navigate(['inicio']); //Redireccionar al /dashboard
       }
     })
   }
@@ -151,6 +181,14 @@ export class authServices {
       this.rolUserStatusListener.next(authInformation.rol);
       this.rolUser = authInformation.rol; //agregar el valor de usuarios segun la información del localStorage en sesion vigente
       this.idUser = authInformation.id; //Cedula del usuario
+      this.nameUser = authInformation.name;
+      this.lastNameUser = authInformation.lastNames;
+      this.emailUser = authInformation.email;
+      this.landLineUser = authInformation.landLine;
+      this.birthDateUser = authInformation.birthDate;
+      this.issueDateUser = authInformation.issueDate;
+
+      console.log(this.lastNameUser);
     }
   }
 
@@ -159,6 +197,12 @@ export class authServices {
     const expirationDate = localStorage.getItem("expiration");
     const rolUser = localStorage.getItem("rol");
     const idUser = localStorage.getItem("id");
+    const nameUser = localStorage.getItem("name");
+    const lastNameUser = localStorage.getItem("lastNames");
+    const landLineUser = localStorage.getItem("landLine");
+    const emailUser= localStorage.getItem("email");
+    const birthDateUser = localStorage.getItem("birthDate");
+    const issueDateUser = localStorage.getItem("issueDate");
 
     if(!token && !expirationDate ) {
       return;
@@ -167,7 +211,13 @@ export class authServices {
       token: token,
       expirationDate: new Date(expirationDate),
       rol: rolUser,
-      id: idUser
+      id: idUser,
+      name: nameUser,
+      lastNames: lastNameUser,
+      landLine: landLineUser,
+      email: emailUser,
+      birthDate: birthDateUser,
+      issueDate: issueDateUser
     }
   }
 
@@ -177,17 +227,30 @@ export class authServices {
     this.rolUser = '';
     this.authStatusListener.next(false);
     this.rolUserStatusListener.next('');
+    this.nameUser = '';
+    this.lastNameUser = '';
+    this.emailUser= '';
+    this.landLineUser= '';
+    this.birthDateUser = '';
+    this.issueDateUser = '';
     clearTimeout(this.tokenTimer); //Resetear el tiempo del token una vez se crea al hacer login
     this.clearAuthData();//Quitar el data
     this.router.navigate(['/']);//redireccionar
   }
 
   //Metodo para guardar el token y el tiempo de este::LOCAL_STORAGE
-  private saveAuthData(token: string, expirationDate: Date, rol: string, id: string) {
+  private saveAuthData(token: string, expirationDate: Date, rol: string, id: string,
+    nameUser: string, lastName: string, email:string, landLine: string, birthDate: string, issueDate: string) {
     localStorage.setItem('token', token);
     localStorage.setItem('expiration', expirationDate.toISOString());
     localStorage.setItem('rol', rol);
     localStorage.setItem('id', id);
+    localStorage.setItem('name', nameUser);
+    localStorage.setItem('lastNames', lastName);
+    localStorage.setItem('email', email);
+    localStorage.setItem('landLine', landLine);
+    localStorage.setItem('birthDate', birthDate);
+    localStorage.setItem('issueDate', issueDate);
   }
 
   private clearAuthData() {
@@ -195,6 +258,12 @@ export class authServices {
     localStorage.removeItem("expiration");
     localStorage.removeItem("rol");
     localStorage.removeItem("id");
+    localStorage.removeItem('name');
+    localStorage.removeItem('LastName');
+    localStorage.removeItem('email');
+    localStorage.removeItem('landLine');
+    localStorage.removeItem('birthDate');
+    localStorage.removeItem('issueDate');
   }
 
   //Metodo que elimina el token cuando haya pasado el tiempo valido del token "1h"

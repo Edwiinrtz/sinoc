@@ -1,5 +1,5 @@
 <!-- Creates a layout with a left-positioned sidenav and explicit content. -->
-<mat-toolbar class="ca_header">
+<mat-toolbar class="ca_header" *ngIf="userIsAuthenticated">
   <div>
     <p>logo</p>
   </div>
@@ -21,32 +21,32 @@
       <button class="ca_toggleNavList" mat-button (click)="sidenav.toggle()">Toggle</button>
 
       <mat-list-item>
-        <a routerLink="/dashboard">Home</a>
+        <a routerLink="/inicio">Home</a>
           <mat-icon mat-list-icon>home</mat-icon>
       </mat-list-item>
 
       <mat-list-item>
-        <a routerLink="/appointment">Solicitar cita</a>
+        <a routerLink="/solicitar-cita">Solicitar cita</a>
           <mat-icon mat-list-icon>home</mat-icon>
       </mat-list-item>
 
       <mat-list-item>
-        <a routerLink="/my-appointments">Mis citas</a>
+        <a routerLink="/mis-citas">Mis citas</a>
           <mat-icon mat-list-icon>home</mat-icon>
       </mat-list-item>
 
       <mat-list-item>
-        <a routerLink="/dashboard">Solicitar orden</a>
+        <a routerLink="/solicitar-orden">Solicitar orden</a>
           <mat-icon mat-list-icon>home</mat-icon>
       </mat-list-item>
 
       <mat-list-item>
-        <a routerLink="/dashboard">Mis ordenes</a>
+        <a routerLink="/mis-ordenes">Mis ordenes</a>
           <mat-icon mat-list-icon>home</mat-icon>
       </mat-list-item>
 
       <mat-list-item>
-        <a routerLink="/dashboard">Perfil</a>
+        <a routerLink="/mi-perfil">Perfil</a>
           <mat-icon mat-list-icon>home</mat-icon>
       </mat-list-item>
 

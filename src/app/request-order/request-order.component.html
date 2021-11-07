@@ -1,0 +1,38 @@
+<div id="solicitar-orden">
+  <form [formGroup]="form" (submit)="solicitarOrden()">
+    <mat-form-field>
+      <input matInput type="text" placeholder= "Nombre" formControlName="name">
+      <mat-error *ngIf="form.get('name').invalid"> Ingresar el nombre del solicitante de la orden </mat-error> <!-- Mensajes de error -->
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput type="text" placeholder= "Apellidos" formControlName="lastName">
+      <mat-error *ngIf="form.get('lastName').invalid"> Ingresar los apellidos del solicitante de la orden </mat-error> <!-- Mensajes de error -->
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput type="text" placeholder= "Cédula" formControlName='cedula'>
+      <mat-error *ngIf="form.get('cedula').invalid"> Ingresar la cédula del solicitante de la orden </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <textarea matInput type="text" placeholder= "Observaciones" formControlName='observations'></textarea>
+    </mat-form-field>
+
+    <div>
+      <button mat-stroked-button type="button" (click)="escogerOrden.click()">Subir orden</button>
+      <input type="file" #escogerOrden (change)="onImagePicked($event)">
+      <p>{{ nombreArchivo }}</p>
+    </div>
+
+    <!-- <div class="image-preview" *ngIf="filePreview !== '' && filePreview && form.get('archivo').valid">
+      <img [src]="filePreview" [alt]="form.value.nombre">
+    </div> -->
+
+    <button
+      mat-flat-button
+      color="primary"
+      type="submit"> Enviar orden </button>
+    </form>
+</div>
+

@@ -33,15 +33,22 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { CreateAppointsmentComponent } from './appointments/create-appointsment/create-appointsment.component';
 import { MyAppointsmentsComponent } from './appointments/my-appointsments/my-appointsments.component';
+import { RequestOrderComponent } from './request-order/request-order.component';
+import { UniqueSede } from './appointments/filter-data-appointments';
+import { SingUpComponent } from './auth/singup/singup.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     LoginComponent,
+    SingUpComponent,
     DashboardComponent,
     CreateAppointsmentComponent,
-    MyAppointsmentsComponent
+    MyAppointsmentsComponent,
+    RequestOrderComponent,
+    UniqueSede
   ],
   imports: [
     BrowserModule,

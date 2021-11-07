@@ -1,30 +1,51 @@
-import { NumericType } from "mongodb";
-
-export interface Appointments {
-  _id: string;
-  cc: string;
+export interface CrearCita {
+  name: string;
+  lastNames: string;
+  id: string;
   email: string;
-  sede: string;
-  tipo_consulta: string;
-  //medico_solicitado: string,
-  //fecha_disponible: string;
-  //hora_disponible: string;
+  landline: string;
+  place: string;
+  type_of_query: string;
+  requested_doctor: string;
+  available_date: string;
+  available_time: string;
+}
+
+export interface CalendarioDoctor {
+  place: string;
+  KindOf: string;
+  doctor: string;
+  date: string;
+  time: string;
   status: string;
 }
 
+export interface Sede {
+  value: string;
+  viewValue: string;
+}
+
 export interface TipoConsulta {
+  idSede: string;
   value: string;
   viewValue: string;
 }
 
 export interface Medico {
-  especialista: string;
+  idTipoConsulta: string;
+  idSede: string;
   value: string;
   viewValue: string;
 }
 
+export interface Fecha {
+  value: string;
+}
+
+
 export interface Horario {
-  doctor: string;
+  idMedico: string;
+  idFecha: string;
   value: string;
   viewValue: string;
   status: string;

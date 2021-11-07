@@ -10,6 +10,7 @@ import { DashboardComponent } from "./dashboard/dashboard.component";
 import { authGuard } from './auth/auth.guard';
 import { CreateAppointsmentComponent } from "./appointments/create-appointsment/create-appointsment.component";
 import { MyAppointsmentsComponent } from './appointments/my-appointsments/my-appointsments.component';
+import { RequestOrderComponent } from "./request-order/request-order.component";
 
 const routes: Routes = [
   {
@@ -17,7 +18,7 @@ const routes: Routes = [
     component: LoginComponent
   },
   {
-    path: 'login',
+    path: 'iniciar-sesion',
     component: LoginComponent
   },
   {
@@ -25,18 +26,23 @@ const routes: Routes = [
     component: SingUpComponent
   },
   {
-    path: 'dashboard',
+    path: 'inicio',
     component: DashboardComponent,
     canActivate: [authGuard]
   },
   {
-    path: 'appointment',
+    path: 'solicitar-cita',
     component: CreateAppointsmentComponent,
     canActivate: [authGuard]
   },
   {
-    path: 'my-appointments',
+    path: 'mis-citas',
     component: MyAppointsmentsComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'solicitar-orden',
+    component: RequestOrderComponent,
     canActivate: [authGuard]
   }
 ];

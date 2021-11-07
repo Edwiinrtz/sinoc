@@ -28,7 +28,6 @@ mongoose.connect(url,(err)=>{
 
 })
 
-
 //jwt info
 const { json_key } = require('./configs/configs')
 middelware_jwt = express.Router();
@@ -85,7 +84,33 @@ app.post("/signin", async (req, res) => {
   }
 })
 
+//Nueva cita --- --
+app.post("/newquote",async (req,res)=>{
+    let response = await controller.quote(req.body)
+    response.done ? res.sendStatus(200) : res.status(400).send(response.message)
+})
 
+//Todas- citas : _id: por usuario se identifica por cedula
+app.post("/myQuotes",async (req,res)=>{
+  console.log("server /myQuotes" , req.body)
+  let response = await controller.getQuotes({id:req.body.id})
+  response.done ? res.status(200).json(response.info) : res.status(400).send(response.message)
+})
+
+//Crear disponibildiad del médico
+app.post("/newAppointment", async (req,res)=>{
+  console.log("server.js " , req.body);
+  let response = await controller.appointment(req.body)
+  response.done ? res.sendStatus(200) : res.status(400).send(response.message)
+})
+
+//Filtro por el status del medico de la hora.
+app.get("/appointments",async (req,res)=>{
+  let response = await controller.getAppointments({status:"available"})
+  response.done ? res.status(200).json(response.info) : res.status(400).send(response.message)
+})
+
+//orden - todavia no funciona...
 app.post("/uploadfile",(req,res)=>{
   try{
     let file = req.files.file
@@ -107,4 +132,3 @@ app.listen(3000, () => {
 
   console.log("Server has been started")
 })
-

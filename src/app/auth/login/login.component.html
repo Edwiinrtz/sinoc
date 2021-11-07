@@ -1,109 +1,50 @@
 <div id="login-register">
   <div class="ca-col-6">
     <div>
-      <p>Logo</p>
-      <p>texto</p>
-    <mat-tab-group mat-align-tabs="center" dynamicHeight="true" animationDuration="500ms">
-      <mat-tab label="Iniciar sesión">
-        <ng-template matTabContent>
-        <form (submit)="onLogin(loginForm)" #loginForm="ngForm">
-          <mat-form-field>
-            <input matInput type="text" placeholder="Correo electronico" placeholder= "Correo electrónico" #emailInput="ngModel" name="login_email" ngModel required>
-            <mat-error *ngIf="emailInput.invalid"> Ingresar un formato de correo válido. </mat-error> <!-- Mensajes de error -->
-          </mat-form-field>
+      <img src="assets/logo.png">
+      <p class="ca_textoIntro">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus vitae laoreet nulla,
+         at pulvinar libero. Ut ut lacus vel libero semper congue vel id diam. Fusce sit amet fermentum lacus,
+         ut suscipit dui. In hac habitasse platea dictumst. Fusce pellentesque felis arcu, at cursus dui ultrices et.
+         Suspendisse eu arcu enim.</p>
 
-          <mat-form-field>
-            <input matInput type="password" placeholder="Contraseña" placeholder= "Contraseña" #passwordInput="ngModel" name="login_password" ngModel required autocomplete="on">
-            <mat-error *ngIf="passwordInput.invalid"> Ingresar una contraseña válida. </mat-error> <!-- Mensajes de error -->
-          </mat-form-field>
+        <div>
+          <form (submit)="onLogin(loginForm)" #loginForm="ngForm">
+            <mat-form-field>
+              <input matInput type="text" placeholder="Correo electronico" placeholder= "Correo electrónico" #emailInput="ngModel" name="login_email" ngModel required>
+              <mat-error *ngIf="emailInput.invalid"> Ingresar un formato de correo válido. </mat-error> <!-- Mensajes de error -->
+            </mat-form-field>
 
-          <button
-            mat-flat-button
-            color="primary"
-            type="submit"> Ingresar</button>
-          </form>
-        </ng-template>
-      </mat-tab>
+            <mat-form-field>
+              <input matInput type="password" placeholder="Contraseña" placeholder= "Contraseña" #passwordInput="ngModel" name="login_password" ngModel required autocomplete="on">
+              <mat-error *ngIf="passwordInput.invalid"> Ingresar una contraseña válida. </mat-error> <!-- Mensajes de error -->
+            </mat-form-field>
 
-      <mat-tab label="Registrarse">
-        <form (submit)="onSignup(singupForm)" #singupForm="ngForm">
-          <mat-form-field>
-            <input matInput type="text" placeholder="Nombre" #nombreInput="ngModel" name="singup_name" ngModel required>
-            <mat-error *ngIf="nombreInput.invalid"> Ingresar un formato de correo válido. </mat-error> <!-- Mensajes de error -->
-          </mat-form-field>
+            <button
+              mat-flat-button
+              type="submit" class="btn_login"> Ingresar</button>
+            </form>
+        </div>
 
-          <mat-form-field>
-            <input matInput type="text" placeholder="Apellidos" #apellidosInput="ngModel" name="singup_lastName" ngModel required>
-            <mat-error *ngIf="apellidosInput.invalid"> Ingresar un formato de correo válido. </mat-error> <!-- Mensajes de error -->
-          </mat-form-field>
-
-          <mat-form-field>
-            <input matInput type="text" placeholder="Cédula" #cedulaInput="ngModel" name="singup_id" ngModel required>
-            <mat-error *ngIf="cedulaInput.invalid"> Ingresar un formato de correo válido. </mat-error> <!-- Mensajes de error -->
-          </mat-form-field>
-
-          <mat-form-field appearance="fill">
-            <mat-label>mes/día/año - fecha de nacimiento</mat-label>
-            <input matInput [matDatepicker]="escogerCumpleanos" name="singup_birthday" #bithdayInput="ngModel" ngModel (dateChange)="formatDateBirth($event.value)" required>
-            <mat-datepicker-toggle matSuffix [for]="escogerCumpleanos"></mat-datepicker-toggle>
-            <mat-datepicker #escogerCumpleanos></mat-datepicker>
-            <mat-error *ngIf="bithdayInput.invalid"> Ingresar un formato de correo válido. </mat-error> <!-- Mensajes de error -->
-          </mat-form-field>
-
-          <mat-form-field appearance="fill">
-            <mat-label>mes/día/año - fecha de expedición</mat-label>
-            <input matInput [matDatepicker]="escogerExpedicion" name="singup_issueDate" #issueDateInput="ngModel" ngModel (dateChange)="formatIssue($event.value)" required>
-            <mat-datepicker-toggle matSuffix [for]="escogerExpedicion"></mat-datepicker-toggle>
-            <mat-datepicker #escogerExpedicion></mat-datepicker>
-            <mat-error *ngIf="issueDateInput.invalid"> Ingresar un formato de correo válido. </mat-error> <!-- Mensajes de error -->
-          </mat-form-field>
-
-          <mat-form-field appearance="fill">
-            <mat-label>Escoger EPS</mat-label>
-            <mat-select name="singup_eps" #epsInput="ngModel" ngModel required>
-              <mat-option *ngFor="let epsClient of eps" [value]="epsClient.value">
-                  {{epsClient.viewValue}}
-              </mat-option>
-          </mat-select>
-            <mat-error *ngIf="epsInput.invalid"> Ingresar un formato de correo válido. </mat-error> <!-- Mensajes de error -->
-          </mat-form-field>
-
-          <mat-form-field>
-            <input matInput type="text" placeholder="Dirección" #addressInput="ngModel" name="singup_address" ngModel required>
-            <mat-error *ngIf="addressInput.invalid"> Ingresar un formato de correo válido. </mat-error> <!-- Mensajes de error -->
-          </mat-form-field>
-
-          <mat-form-field>
-            <input matInput type="email" placeholder="Nombre" placeholder= "Correo electrónico" #emailInput="ngModel" name="singup_email" ngModel required email>
-            <mat-error *ngIf="emailInput.invalid"> Ingresar un formato de correo válido. </mat-error> <!-- Mensajes de error -->
-          </mat-form-field>
-
-          <mat-form-field>
-            <input matInput type="text" placeholder="Teléfono fijo" #landLineInput="ngModel" name="singip_landLine" ngModel required>
-            <mat-error *ngIf="landLineInput.invalid"> Ingresar un formato de correo válido. </mat-error> <!-- Mensajes de error -->
-          </mat-form-field>
-
-          <mat-form-field>
-            <input matInput type="text" placeholder="Celular" #phoneNumberInput="ngModel" name="singup_phoneNumber" ngModel required>
-            <mat-error *ngIf="phoneNumberInput.invalid"> Ingresar un formato de correo válido. </mat-error> <!-- Mensajes de error -->
-          </mat-form-field>
-
-          <mat-form-field>
-            <input matInput type="password" placeholder="Contraseña" placeholder= "Contraseña" #passwordInput="ngModel" name="singup_password" ngModel required autocomplete="on">
-            <mat-error *ngIf="passwordInput.invalid"> Ingresar una contraseña válida. </mat-error> <!-- Mensajes de error -->
-          </mat-form-field>
-
-          <button
-          mat-flat-button
-          color="primary"
-          type="submit"> Registrarse </button>
-        </form>
-      </mat-tab>
-    </mat-tab-group>
+        <div class="nav_login-register">
+          <ul>
+            <li>
+              <a routerLink="/registrarse">Registrarse</a>
+            </li>
+            <li>
+              <a routerLink="/">FAQ´S</a>
+            </li>
+          </ul>
+        </div>
     </div>
   </div>
 
-  <div class="ca-col-4">
-    <p>Imagen de fondo</p>
+  <div class="ca-col-4 ca_contenedorSlider">
+    <div class="ca_slider">
+      <figure></figure>
+      <figure></figure>
+      <figure></figure>
+      <figure></figure>
+      <figure></figure>
+    </div>
   </div>
 </div>

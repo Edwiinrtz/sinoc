@@ -1,19 +1,21 @@
-<form (submit)="createAppointment(singupForm)" #singupForm="ngForm">
+<form (submit)="createAppointment(reservarCita)" #reservarCita="ngForm">
 
   <mat-form-field appearance="fill">
     <mat-label>Sede</mat-label>
-    <mat-select name="singup_eps" #epsInput="ngModel" ngModel >
-      <mat-option *ngFor="let sede of sedes" [value]="sede.value">
+    <mat-select name="singup_eps" #epsInput="ngModel" (selectionChange)="onSelectSedes($event.value)" ngModel required >
+      <mat-option *ngFor="let sede of sedes | filterUnique:filtroSedes" [value]="sede.value">
           {{sede.viewValue}}
       </mat-option>
   </mat-select>
     <mat-error *ngIf="epsInput.invalid"> Ingresar un formato de correo válido. </mat-error>
   </mat-form-field>
 
-  <mat-form-field appearance="fill">
+  <!-- [(ngModel)]="selectedTipoConsulta.value" -->
+
+  <mat-form-field appearance="fill" *ngIf="tiposConsultas?.length > 0">
     <mat-label>Tipo de consulta</mat-label>
-    <mat-select name="tipo_consulta" #tipoConsulta #consultaInput="ngModel" [(ngModel)]="selectedTipoConsulta.value" (selectionChange)="onSelectTipoConsulta($event.value)" required >
-      <mat-option *ngFor="let tipo_consulta of tiposConsultas" [value]="tipo_consulta.value">
+    <mat-select name="tipo_consulta" #tipoConsulta #consultaInput="ngModel" (selectionChange)="onSelectTipoConsulta($event.value)" ngModel required >
+      <mat-option *ngFor="let tipo_consulta of tiposConsultas | filterUnique:pipeTipoConsulta" [value]="tipo_consulta.value">
           {{tipo_consulta.viewValue}}
       </mat-option>
   </mat-select>
@@ -23,16 +25,16 @@
   <mat-form-field appearance="fill" *ngIf="medicos?.length > 0">
     <mat-label>Medico</mat-label>
     <mat-select name="medico" #medicoInput="ngModel" (selectionChange)="onSelectMedico($event.value)" ngModel required>
-      <mat-option *ngFor="let medico of medicos" [value]="medico.value">
+      <mat-option *ngFor="let medico of medicos | filterUnique:pipeMedico" [value]="medico.value">
           {{medico.viewValue}}
       </mat-option>
   </mat-select>
   <mat-error *ngIf="medicoInput.invalid"> Seleccionar un doctor </mat-error>
   </mat-form-field>
 
-  <mat-form-field appearance="fill" *ngIf="horarios?.length > 0">
+  <mat-form-field appearance="fill" *ngIf="medicos?.length > 0">
     <mat-label>Escoge fecha</mat-label>
-    <input matInput [matDatepicker]="escogerFecha" name="singup_issueDate" #issueDateInput="ngModel" ngModel required>
+    <input matInput [matDatepicker]="escogerFecha" name="singup_issueDate" #issueDateInput="ngModel" (dateChange)="onSelectDate($event.value)" ngModel required>
     <mat-datepicker-toggle matSuffix [for]="escogerFecha"></mat-datepicker-toggle>
     <mat-datepicker #escogerFecha></mat-datepicker>
     <mat-error *ngIf="issueDateInput.invalid"> Escoger una fecha válida </mat-error> <!-- Mensajes de error -->
@@ -55,7 +57,6 @@
   <button
   mat-flat-button
   color="primary"
-  type="submit"> Registrarse </button>
+  type="submit"> Reservar cita </button>
+  <button type="button" class="btn btn-default" (click)="prueba(reservarCita)">Reset</button>
 </form>
-
-<!-- *ngIf="medicos?.length > 0" -->

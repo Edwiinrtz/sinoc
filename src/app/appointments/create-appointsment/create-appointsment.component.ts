@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AppointmentsService } from '../appointments.service';
 import { authServices } from '../../auth/auth.services';
 import { NgForm } from '@angular/forms';
-import { TipoConsulta, Medico, Horario} from '../appointments-interfaces';
+import { TipoConsulta, Medico, Horario, Sede } from '../appointments-interfaces';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-create-appointsment',
@@ -11,57 +12,104 @@ import { TipoConsulta, Medico, Horario} from '../appointments-interfaces';
 })
 export class CreateAppointsmentComponent implements OnInit {
 
-  public idUser = this.authServices.getIDuser();
-
-  public sedes = [
-    {
-      value: "sede1",
-      viewValue: 'Sede1'
-    },
-    {
-      value: "sede2",
-      viewValue: 'Sede2'
-    },
-    {
-      value: "sede3",
-      viewValue: 'Sede3'
-    }
-  ];
-
-  public selectedTipoConsulta: TipoConsulta = { value: "", viewValue: ""};
+  private cambioFecha;
+  private sedeActual;
+  private cambioDoctor;
+  public submitted: boolean;
   public tiposConsultas: TipoConsulta[];
   public medicos: Medico[];
   public horarios: Horario[];
-  public prueba: string;
+  public sedes: Sede[];
+  public filtroSedes: Sede[];
+
+  //Values de pipe
+  public pipeSede = "value";
+  public pipeTipoConsulta = "value";
+  public pipeMedico: "value;"
+
+  //Valores del storage
+  public nameUser = this.authServices.getNameUser();
+  public lastNameUser = this.authServices.getLastNameUser();
+  public idUser = this.authServices.getIDuser();
+  public emailUser = this.authServices.getEmailUser();
+  public landLineUser = this.authServices.getLandLineUser();
 
   constructor(private AppointmentsService: AppointmentsService, private authServices: authServices) { }
 
   ngOnInit(): void {
-    this.tiposConsultas = this.AppointmentsService.getTipoConsultas();
+    this.sedes = this.AppointmentsService.getSedes();
+    this.AppointmentsService.getDataCreateAppointment();
+    //this.AppointmentsService.createAppointmentDoctor("Bello", "General", "Carlos","14-10-2021","5:00");//funciona
+  }
+
+  onSelectSedes(value: string): void {
+    this.tiposConsultas = this.AppointmentsService.getTipoConsultas().filter( item => item.idSede == value);
+    this.sedeActual = value;
+    console.log("dato sede onSelectSedes", this.sedeActual);
+
+
   }
 
   onSelectTipoConsulta(value: string): void {
-    console.log("valor id " , value);
-    this.medicos = this.AppointmentsService.getMedicos().filter(item => item.especialista === value);
-
-
-
+    console.log("dato sede onSelectTipoConsulta", this.sedeActual);
+    console.log("medicos" , this.AppointmentsService.getMedicos());
+    this.medicos = this.AppointmentsService.getMedicos().filter(item => item.idTipoConsulta === value);
   }
 
   onSelectMedico(value: string): void {
-    console.log("valor doctor " , value);
-    this.horarios = this.AppointmentsService.getHorarios().filter(item => item.doctor == value && item.status== "disponible");
+    this.cambioDoctor = value;
+    //this.horarios = this.AppointmentsService.getHorarios().filter(item => item.idFecha == value && item.status== "available");
+  }
+
+  onSelectDate(value: any): void {
+
+    if(!value) {
+      return
+    } else {
+      this.cambioFecha = value.getDate() + '-' + (value.getMonth() + 1) + '-' + value.getFullYear();
+      this.horarios = this.AppointmentsService.getHorarios().filter(item => item.idFecha == this.cambioFecha && item.status== "available" && item.idMedico == this.cambioDoctor);
+      const data= this.AppointmentsService.getHorarios();
+      console.log("horarios::" , this.AppointmentsService.getHorarios());
+
+      console.log("horarios" , this.AppointmentsService.getHorarios());
+
+      for(let i =0; i < data.length; i++){
+        if(data[i].idFecha == this.cambioFecha) {
+          console.log("Fechas coinciden");
+        } else {
+          console.log("Fechas diferentes");
+        }
+      }
+    }
   }
 
   createAppointment(form: NgForm) {
 
-    console.log("valores de form " , form);
+    console.log("data Date::: " , form.value.singup_issueDate);
     if(form.invalid){
       return;
     }
-    console.log("forms " , form.value.tipo_consulta);
-    console.log("forms " , form.value.medico);
-    console.log("forms " , form.value.horarios);
 
+    this.AppointmentsService.createAppointment(
+      this.nameUser,
+      this.lastNameUser,
+      this.idUser,
+      this.emailUser,
+      this.landLineUser,
+      form.value.singup_eps,
+      form.value.tipo_consulta,
+      form.value.medico,
+      this.cambioFecha,
+      form.value.horarios
+    );
+    form.resetForm();
   }
+
+  prueba(form: NgForm) {
+    this.tiposConsultas = [];
+    this.medicos = [];
+    this.horarios = [];
+    form.resetForm();
+  }
+
 }

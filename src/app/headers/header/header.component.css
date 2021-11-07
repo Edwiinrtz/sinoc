@@ -1,5 +1,6 @@
 .ca_header {
-  background-color: orange;
+  background-color: #ffffff;
+  border-bottom: 1px solid #afafaf;
 }
 
 .ca_toggleNavList{
