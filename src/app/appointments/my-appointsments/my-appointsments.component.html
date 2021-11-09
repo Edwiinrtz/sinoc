@@ -1,5 +1,38 @@
---- todas las citas ---
-
-<div>
-  {{  myQuotes  |  json}}
+<div id="ca_misCitas">
+  <div>
+    <div>
+      <h2> Citas reservadas de <span>{{ nameUser }} {{ lastNamesUser }} </span> </h2>
+      <p class="info_importante">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ligula arcu, bibendum vitae urna in,
+        aliquam cursus nisi. Duis venenatis enim non risus tristique, id posuere risus malesuada. Sed convallis
+        at mauris aliquet sagittis. Nam euismod eros nunc, eu commodo erat efficitur vitae. Quisque sit amet magna
+        vel risus imperdiet rutrum. <span>Nunc cursus turpis vitae diam laoreet sagittis. Suspendisse</span> consectetur gravida
+        metus sed imperdiet. Suspendisse potenti. Nunc tincidunt consequat mi, nec dapibus enim. Morbi nulla diam,
+        dignissim ut interdum id, molestie vel felis. In bibendum leo a lorem semper, non tristique elit rhoncus.
+        Curabitur eleifend arcu nisl, eget venenatis magna mattis id. Praesent a nisl non nulla aliquam semper et
+        ut elit. Etiam consectetur enim vitae condimentum dignissim. <span>Morbi non pretium lorem. Sed facilisis risus
+        ipsum, ut tincidunt risus tempor vel.*</span></p>
+    </div>
+    <mat-accordion multi="true" *ngIf="myQuotes.length > 0">
+      <mat-expansion-panel *ngFor="let cita of myQuotes">
+        <mat-expansion-panel-header>
+          <h4> Fecha de la solicitud de cita: {{ cita.available_date }} Hora: {{ cita.available_time }} </h4>
+        </mat-expansion-panel-header>
+        <h3>Datos del solicitante: </h3>
+        <p>Nombre Completo: {{cita.name }} {{ cita.lastNames}}</p>
+        <p>Cédula: {{cita.id }}</p>
+        <p>Correo electrónico: {{ cita.email}}</p>
+        <p class="sepDatos">Télefono de contacto: {{cita.landline}}</p>
+        <hr>
+        <h3> Datos del prestador: </h3>
+        <p>Lugar de la cita: {{ cita.place}} </p>
+        <p>Hora de la cita: {{ cita.available_time }}</p>
+        <p>Tipo de consulta: {{ cita.type_of_query }}</p>
+        <p>Nombre del doctor: {{ cita.requested_doctor }}</p>
+        <mat-action-row>
+          <button mat-button color="warn" (click)="onDelete(cita.id)">DELETE</button>
+        </mat-action-row>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <p class="info-text mat-body-1" *ngIf="myQuotes.length <= 0">No posts added yet!</p>
+  </div>
 </div>

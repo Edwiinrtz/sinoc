@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;700&display=swap');
+
+p, h1, h2, h3, a {
+  font-family: 'Oswald', sans-serif;
+  font-size: 20px;
+  font-weight: 200;
+}
+
+.container_dashboard {
+  width: 100%;
+}
+
+.subContainer_dashboard {
+  width: 80%;
+  margin: auto;
+}
+
+h2 {
+  font-size: 4em;
+  padding: 1em 0;
+}
+
+h2 span {
+  font-weight: 700;
+  color: #1a73e8;
+}
+
+.contenedor_tarjetas {
+  display: flex;
+  margin-bottom: 8em;
+}
+
+.contenedor_tarjetas > div{
+  width: 50%;
+}
+
+.tarjeta {
+  width: 70%;
+  margin: auto;
+  background-color: #ffffff;
+  text-align: center;
+  border-radius: 15px;
+  padding: 0 0 4em 0;
+  margin-top: 4em;
+  border: 2px solid #1a73e8;
+  transition: all 0.5s cubic-bezier(0, 1.3, 0.58, 1);
+  overflow: hidden;
+}
+
+.tarjeta > img {
+  width: 100%;
+  height: auto;
+}
+
+.tarjeta:hover {
+  margin-top: 6em;
+}
+
+.tarjeta  .descripcion {
+  padding: 1em;
+  font-size: 18px;
+  line-height: 1.4;
+}
+
+.btn_dashboard {
+  display: block;
+  width: 30%;
+  padding: 1em 4em;
+  background-color: #1a73e8;
+  color: #ffffff;
+  border-radius: 5px;
+  text-decoration: none;
+  margin: auto;
+  margin-top: 2em;
+}
+
+h3 {
+  font-size: 2.5em;
+  color: #1a73e8;
+  padding: 0.5em 0 0 0;
+}
+
+mat-accordion p {
+  font-size: 14px;
+}
+
+mat-expansion-panel {
+  width: 80%;
+  margin: auto;
+  margin-bottom: 5px;
+  margin-top: 10px;
+}
+
+mat-accordion mat-icon{
+  color: #1a73e8;
+  position: absolute;
+  right: 60px;
+}
+
+.mat-accordion>.mat-expansion-panel-spacing:last-child {
+  margin-bottom: 20px;
+}

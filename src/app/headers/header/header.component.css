@@ -1,10 +1,179 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;700&display=swap');
+
 .ca_header {
   background-color: #ffffff;
   border-bottom: 1px solid #afafaf;
 }
 
 .ca_toggleNavList{
-  background-color: red;
+  padding: 0.5em 0;
+}
+
+.ca_header button{
+  border: 1px solid #1a73e8;
+  background-color: #ffffff;
+  transition: all 0.2s ease-in-out;
+}
+
+.ca_toggleNavList {
   width: 100%;
-  height: 50px;
+  height: 45px;
+}
+
+.ca_header mat-icon,
+.ca_toggleNavList mat-icon {
+  font-size: 30px;
+  height: 30px;
+  width: 30px;
+  color: #1a73e8;
+  transition: all 0.2s ease-in-out;
+}
+
+.ca_toggleNavList mat-icon {
+  color: #ffffff;
+}
+
+.ca_toggleNavList:hover mat-icon {
+  left: -10px;
+}
+
+.ca_toggleNavList mat-icon {
+  position: absolute;
+  top: 7.5px;
+  left: 0;
+  right: 0;
+  width: 100%;
+}
+
+.ca_header button {
+  position: absolute;
+  top: 15px;
+  left: 20px;
+}
+
+.ca_header button:hover {
+  border: 1px solid #ffffff;
+  background-color: #1a73e8;
+  left: 30px;
+}
+
+.ca_header button:active {
+  left: 0;
+}
+
+.ca_header button:hover mat-icon {
+  color: #ffffff;
+}
+
+mat-sidenav {
+  background-color: #1a73e8;;
+  box-shadow: 1px 0 5px  #afafaf;
+  border-right: 0;
+}
+
+mat-nav-list {
+  padding-top: 0;
+}
+
+mat-sidenav {
+  overflow: hidden;
+}
+
+/*** menus ***/
+
+mat-list-item {
+}
+
+mat-list-item a{
+  display: block;
+}
+
+#menu_principal {
+  width: 150px;
+  overflow: hidden;
+  padding-left: 0;
+}
+
+#menu_principal li{
+  list-style: none;
+  padding: 0.5em 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1em;
+  text-align: center;
+  font-family: 'Oswald', sans-serif;
+  font-size: 14px;
+  letter-spacing: 1px;
+  overflow: hidden;
+  position: relative;
+  margin-left: 0;
+  transition: all 0.3s ease-in;
+}
+
+#menu_principal li:hover {
+  margin-left: -10px;
+  background-color: #ffffff;
+}
+
+#menu_principal li::after{
+  content: "";
+  background-color: #1a73e8;
+  position: absolute;
+  right: -20px;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 20px;
+  transition: all 0.2s ease-in;
+}
+
+#menu_principal li:hover:after{
+  right: 0;
+}
+
+#menu_principal li mat-icon {
+  order: 1;
+  width: 100%;
+  padding-top: 0.2em;
+  color: #ffffff;
+  transition: all 0.5s ease;
+}
+
+#menu_principal li:hover mat-icon,
+#menu_principal li:hover a {
+  color: #1a73e8;
+}
+
+#menu_principal li a,
+#menu_principal li button{
+  order: 2;
+  padding: 0.5em 1em;
+  color: #ffffff;
+  transition: all 0.5s ease;
+}
+
+#menu_principal li button {
+  background-color: transparent;
+  border: none;
+  font-family: 'Oswald', sans-serif;
+  font-size: 14px;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+#menu_principal li:hover button {
+  color:#1a73e8;
+}
+
+#menu_principal li:first-child{
+  margin-top: 2em;
+}
+
+#menu_principal li:last-child{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin-bottom: 0;
 }

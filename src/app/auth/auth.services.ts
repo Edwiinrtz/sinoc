@@ -15,6 +15,7 @@ export class authServices {
   private authStatusListener =  new Subject<boolean>(); //Observador
   private tokenTimer: any; //Tiempo actual del token al iniciar la sesión
   private rolUserStatusListener = new Subject<string>();
+  private lastNameUserStatusListener = new Subject<string>();
 
   public valorRolTest = "admin"; //pruebas
 
@@ -42,6 +43,10 @@ export class authServices {
 
   getAuthStatusListener() {
     return this.authStatusListener.asObservable();
+  }
+
+  getLastNameUserStatusListener() {
+    return this.lastNameUserStatusListener.asObservable();
   }
 
   getRolStatusListener() {
@@ -151,11 +156,12 @@ export class authServices {
         const issueDateUser = response.user.info.issueDate;
         this.rolUser = rolUser;
         this.rolUserStatusListener.next(rolUser);
+        this.lastNameUserStatusListener.next(lastNameUser);
         this.saveAuthData(token, expirationDate, rolUser, idUser, nameUser, lastNameUser, emailUser, landLineUser, birthDateUser, issueDateUser);
 
         //Funciona:: borrar luego
-        this.nameUser = response.user.info.name;
-        this.addresUser = response.user.info.address;
+        //this.nameUser = response.user.info.name;
+        //this.addresUser = response.user.info.address;
         this.router.navigate(['inicio']); //Redireccionar al /dashboard
       }
     })
@@ -169,7 +175,6 @@ export class authServices {
     if(!authInformation) {
       return;
     }
-
     const now = new Date();
     const expiresIn = authInformation.expirationDate.getTime() - now.getTime(); //Comprueba si la hora actual es mayor a la fecha de vencimiento del token
 
@@ -179,6 +184,7 @@ export class authServices {
       this.setAuthTimer(expiresIn / 1000); //convertir de milisegundos a segundos
       this.authStatusListener.next(true); //Pasar TRUE a todos los observadores
       this.rolUserStatusListener.next(authInformation.rol);
+      this.lastNameUserStatusListener.next(authInformation.lastNames);
       this.rolUser = authInformation.rol; //agregar el valor de usuarios segun la información del localStorage en sesion vigente
       this.idUser = authInformation.id; //Cedula del usuario
       this.nameUser = authInformation.name;
@@ -187,8 +193,6 @@ export class authServices {
       this.landLineUser = authInformation.landLine;
       this.birthDateUser = authInformation.birthDate;
       this.issueDateUser = authInformation.issueDate;
-
-      console.log(this.lastNameUser);
     }
   }
 
@@ -227,6 +231,7 @@ export class authServices {
     this.rolUser = '';
     this.authStatusListener.next(false);
     this.rolUserStatusListener.next('');
+    this.lastNameUserStatusListener.next('');
     this.nameUser = '';
     this.lastNameUser = '';
     this.emailUser= '';
@@ -259,7 +264,7 @@ export class authServices {
     localStorage.removeItem("rol");
     localStorage.removeItem("id");
     localStorage.removeItem('name');
-    localStorage.removeItem('LastName');
+    localStorage.removeItem('lastNames');
     localStorage.removeItem('email');
     localStorage.removeItem('landLine');
     localStorage.removeItem('birthDate');

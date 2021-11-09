@@ -98,6 +98,10 @@ Estilos componente Login
   width: 100%;
 }
 
+.ca-col-6 img {
+  text-align: center;
+}
+
 mat-form-field {
   display: block;
   width: 40%;

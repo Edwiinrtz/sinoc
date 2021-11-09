@@ -1,17 +1,108 @@
 <ng-container>
-  <div class="container_usuario" *ngIf="rolUser == 'usuario'">
-    a
-  </div>
+  <div class="container_dashboard" >
+    <div class="subContainer_dashboard">
+      <div>
+        <h2>¡ Bienvenido <span>{{ nameUser }} {{ lastNameUser }}</span> !</h2>
+      </div>
+
+      <div class="contenedor_tarjetas">
+        <div>
+          <div class="tarjeta">
+            <img src="/assets/solicitar-cita.jpg" />
+            <h3>Solicitar cita</h3>
+            <p class="descripcion">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis tincidunt convallis libero quis consequat.
+              Curabitur mi sem, eleifend nec turpis sit amet, suscipit ullamcorper erat. Donec laoreet nulla iaculis tellus
+              semper cursus. Nunc nec lorem sit amet urna cursus commodo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            </p>
+
+            <mat-accordion class="example-headers-align" multi>
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    Horarios
+                    <mat-icon>access_time</mat-icon>
+                  </mat-panel-title>
+                  <mat-panel-description>
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+                  <p>Lunes - viernes: 6:00 a.m - 8:00 p.m</p>
+                  <p>Sabado: 8:00 a.m - 6:00 p.m</p>
+                  <p>Domingo: 10:00 a.m 6:00 p.m</p>
+                </mat-expansion-panel>
+            </mat-accordion>
+
+            <mat-accordion class="example-headers-align" multi>
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    Sedes
+                    <mat-icon> place</mat-icon>
+                  </mat-panel-title>
+                  <mat-panel-description>
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+                  <p>Bello</p>
+                  <p>Medellín</p>
+                  <p>Copacabana</p>
+                </mat-expansion-panel>
+            </mat-accordion>
+
+            <a class="btn_dashboard" routerLink="/solicitar-cita">Solicitar cita</a>
+          </div>
+        </div>
+        <div>
+          <div class="tarjeta">
+            <img src="/assets/solicitar-orden.jpg" />
+            <h3>Solicitar orden</h3>
+            <p class="descripcion">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis tincidunt convallis libero quis consequat.
+              Curabitur mi sem, eleifend nec turpis sit amet, suscipit ullamcorper erat. Donec laoreet nulla iaculis tellus
+              semper cursus. Nunc nec lorem sit amet urna cursus commodo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            </p>
+
+            <mat-accordion class="example-headers-align" multi>
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    Horarios
+                    <mat-icon>access_time</mat-icon>
+                  </mat-panel-title>
+                  <mat-panel-description>
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+                  <p>Lunes - viernes: 6:00 a.m - 8:00 p.m</p>
+                  <p>Sabado: 8:00 a.m - 6:00 p.m</p>
+                  <p>Domingo: 10:00 a.m 6:00 p.m</p>
+                </mat-expansion-panel>
+            </mat-accordion>
+
+            <mat-accordion class="example-headers-align" multi>
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    Sedes
+                    <mat-icon> place</mat-icon>
+                  </mat-panel-title>
+                  <mat-panel-description>
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+                  <p>Bello</p>
+                  <p>Medellín</p>
+                  <p>Copacabana</p>
+                </mat-expansion-panel>
+            </mat-accordion>
+
+            <a class="btn_dashboard" routerLink="/solicitar-cita">Solicitar orden</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
   <div class="container_admin"  *ngIf="rolUser == 'admin'">
-    b
 
   </div>
-
-  <div>{{nameUser}}</div>
-  <div>{{idUser}}</div>
-  <div>{{emailUser}}</div>
-  <div>{{lastNameUser}}</div>
-  <div>{{birthDateUser | date:'M/d/yy'}}</div>
-  <div>{{issueDate | date:'M/d/yy'}}</div>
 
 </ng-container>

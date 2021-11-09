@@ -1,59 +1,62 @@
 <!-- Creates a layout with a left-positioned sidenav and explicit content. -->
 <mat-toolbar class="ca_header" *ngIf="userIsAuthenticated">
-  <div>
-    <p>logo</p>
-  </div>
   <div *ngIf="userIsAuthenticated">
-    <p><button mat-button (click)="sidenav.toggle()">Toggle</button></p>
+    <button mat-button (click)="sidenav.toggle()">
+      <mat-icon>keyboard_arrow_right</mat-icon>
+    </button>
   </div>
 </mat-toolbar>
 
-<mat-sidenav-container class="example-container" autosize>
+<mat-sidenav-container class="example-container" autosize >
   <mat-sidenav #sidenav
     mode="side"
     opened=true
-    class="example-sidenav"
     [fixedInViewport]="opcionesNavBar.fixed"
     [fixedTopGap]="opcionesNavBar.top"
     [fixedBottomGap]="opcionesNavBar.bottom">
 
-    <mat-nav-list *ngIf="userIsAuthenticated && rolUser == 'usuario'">
-      <button class="ca_toggleNavList" mat-button (click)="sidenav.toggle()">Toggle</button>
+    <mat-nav-list *ngIf="userIsAuthenticated && rolUser  == 'usuario'">
+      <button class="ca_toggleNavList" mat-button (click)="sidenav.toggle()" >
+        <mat-icon>keyboard_arrow_left</mat-icon>
+      </button>
 
-      <mat-list-item>
-        <a routerLink="/inicio">Home</a>
-          <mat-icon mat-list-icon>home</mat-icon>
-      </mat-list-item>
+     <ul id="menu_principal" >
+      <li>
+        <a routerLink="/inicio">Inicio</a>
+        <mat-icon mat-list-icon>home</mat-icon>
+      </li>
 
-      <mat-list-item>
+      <li>
         <a routerLink="/solicitar-cita">Solicitar cita</a>
-          <mat-icon mat-list-icon>home</mat-icon>
-      </mat-list-item>
+        <mat-icon> insert_invitation</mat-icon>
+      </li>
 
-      <mat-list-item>
+      <li>
         <a routerLink="/mis-citas">Mis citas</a>
-          <mat-icon mat-list-icon>home</mat-icon>
-      </mat-list-item>
+        <mat-icon>assignment</mat-icon>
+      </li>
 
-      <mat-list-item>
+      <li>
         <a routerLink="/solicitar-orden">Solicitar orden</a>
-          <mat-icon mat-list-icon>home</mat-icon>
-      </mat-list-item>
+        <mat-icon>file_copy</mat-icon>
+      </li>
 
-      <mat-list-item>
+      <li>
         <a routerLink="/mis-ordenes">Mis ordenes</a>
-          <mat-icon mat-list-icon>home</mat-icon>
-      </mat-list-item>
+        <mat-icon>assignment</mat-icon>
+      </li>
 
-      <mat-list-item>
-        <a routerLink="/mi-perfil">Perfil</a>
-          <mat-icon mat-list-icon>home</mat-icon>
-      </mat-list-item>
+      <li>
+        <a routerLink="/mi-perfil">Mi Perfil</a>
+        <mat-icon>person</mat-icon>
+      </li>
 
-      <mat-list-item *ngIf="userIsAuthenticated">
+      <li *ngIf="userIsAuthenticated">
         <button mat-butto (click)="onLogout()">Cerrar sesión</button>
-          <mat-icon mat-list-icon>home</mat-icon>
-      </mat-list-item>
+        <mat-icon>subdirectory_arrow_left</mat-icon>
+      </li>
+     </ul>
+
     </mat-nav-list>
 
     <mat-nav-list *ngIf="userIsAuthenticated && rolUser  == 'admin'">
