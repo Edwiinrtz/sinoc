@@ -98,6 +98,13 @@ app.post("/myQuotes",async (req,res)=>{
   let response = await controller.getQuotes({id:req.body.id})
   response.done ? res.status(200).json(response.info) : res.status(400).send(response.message)
 })
+/*
+  get all quotes -> parameter {}
+*/
+app.get("/quotes",async (req,res)=>{
+  let response = await controller.getQuotes({})
+  response.done ? res.status(200).json(response.info) : res.status(400).send(response.message)
+})
 
 app.post("/newAppointment", async (req,res)=>{
   //consultar disponibilidad del medico en la fecha y hora definidos

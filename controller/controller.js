@@ -9,6 +9,7 @@ const appointmentModel = require('../models/Appointments')
 const quoteModel = require('../models/quotes')
 
 const { json_key } = require('../configs/configs')
+const { MongoServerClosedError } = require('mongoose/node_modules/mongodb')
 
 search = async (userId) => {
     let found = false;
