@@ -29,10 +29,10 @@
         <p>Tipo de consulta: {{ cita.type_of_query }}</p>
         <p>Nombre del doctor: {{ cita.requested_doctor }}</p>
         <mat-action-row>
-          <button mat-button color="warn" (click)="onDelete(cita.id)">DELETE</button>
+          <button mat-button color="warn" (click)="onDelete(cita._id)">DELETE</button>
         </mat-action-row>
       </mat-expansion-panel>
     </mat-accordion>
-    <p class="info-text mat-body-1" *ngIf="myQuotes.length <= 0">No posts added yet!</p>
+    <p class="info-text mat-body-1" *ngIf="myQuotes.length <= 0">Aún no tienes citas reservadas</p>
   </div>
 </div>

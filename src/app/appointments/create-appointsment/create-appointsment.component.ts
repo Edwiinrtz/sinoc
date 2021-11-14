@@ -39,7 +39,7 @@ export class CreateAppointsmentComponent implements OnInit {
   ngOnInit(): void {
     this.sedes = this.AppointmentsService.getSedes();
     this.AppointmentsService.getDataCreateAppointment();
-    //this.AppointmentsService.createAppointmentDoctor("Bello", "General", "Carlos","14-10-2021","5:00");//funciona
+    //this.AppointmentsService.createAppointmentDoctor("Niquia", "General", "Maria","14-10-2021","5:00");//funciona
   }
 
   onSelectSedes(value: string): void {

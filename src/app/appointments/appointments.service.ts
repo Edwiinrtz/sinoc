@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { CrearCita, CalendarioDoctor, TipoConsulta, Medico, Horario, Sede, Fecha } from './appointments-interfaces';
+import { Citas, CrearCita, CalendarioDoctor, TipoConsulta, Medico, Horario, Sede, Fecha } from './appointments-interfaces';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class AppointmentsService {
   private medicos: Medico[] = [];
   private horarios: Horario[] = [];
   private fecha: Fecha[] = [];
-  private allQuotes: [] = [];
+  private allQuotes: Citas[] = [];
   private allQuotesUpdated = new Subject<any>();
 
   constructor(private http: HttpClient, private router: Router) {}
@@ -48,7 +49,7 @@ export class AppointmentsService {
   getDataCreateAppointment() {
     this.http.get<any>('http://localhost:3000/appointments')
     .subscribe( (postData) => {
-      console.log("Postadata" , postData);
+
       //Asignar los valores a los arrays de cada componente
       for(let i= 0; i < postData.length; i++) {
         this.tipoConsultas[i] = {
@@ -82,11 +83,27 @@ export class AppointmentsService {
     });
   }
 
-  getAppointments(){
-    this.http.post<any>('http://localhost:3000/myQuotes', {id: "1020474107"})
-    .subscribe( (postData) => {
-      console.log("Postadata" , postData);
-      this.allQuotes = postData;
+  getAppointments(idUser: string){
+    this.http.post<any>('http://localhost:3000/myQuotes', { id: idUser } )
+    .pipe(map( (postData) => {
+      return postData.map( post => {
+        return {
+          available_date: post.available_date,
+          available_time: post.available_time,
+          email: post.email,
+          id: post.id,
+          landline: post.landline,
+          lastNames: post.lastNames,
+          name: post.name,
+          place: post.place,
+          requested_doctor: post.requested_doctor,
+          type_of_query: post.type_of_query,
+          _id: post._id
+        }
+      })
+    }))
+    .subscribe( (DataConvertidapost) => {
+      this.allQuotes = DataConvertidapost;
       this.allQuotesUpdated.next([...this.allQuotes]);
     });
   }
@@ -127,6 +144,15 @@ export class AppointmentsService {
     .subscribe ((responseData) => {
       console.log("datos enviados al server, ruta:::> /newAppointment");
     });
+  }
+
+  deleteAppointment(AppointmentId: string) {
+    this.http.delete('http://localhost:3000/newquote/ ' + AppointmentId)
+    .subscribe(() => {
+      const updatedAppointments = this.allQuotes.filter(data => data._id != AppointmentId);
+      this.allQuotes = updatedAppointments;
+      this.allQuotesUpdated.next([...this.allQuotes]);
+    })
   }
 
 }

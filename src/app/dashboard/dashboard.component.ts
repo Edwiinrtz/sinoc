@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { authServices } from '../auth/auth.services';
 
@@ -16,18 +17,16 @@ export class DashboardComponent implements OnInit {
   public landLineUser = this.authServices.getLandLineUser();
   public birthDateUser = this.authServices.getBirthDateUser();
   public issueDate = this.authServices.getIssueDate();
-
   public lastNameUser = this.authServices.getLastNameUser();
   public rolUser = '';
   public rolUserObservable: Subscription;
   public rolLastNameObservable: Subscription;
 
-
-  constructor(public authServices: authServices) {
+  constructor(private authServices: authServices) {
 
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.rolUser = this.authServices.getRolUser();
     this.rolUserObservable = this.authServices.getRolStatusListener()
     .subscribe( rol => {

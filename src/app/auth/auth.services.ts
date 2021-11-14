@@ -154,6 +154,11 @@ export class authServices {
         const landLineUser = response.user.info.landline;
         const birthDateUser = response.user.info.birthDate;
         const issueDateUser = response.user.info.issueDate;
+
+
+        this.nameUser = response.user.info.name;
+        this.lastNameUser = response.user.info.lastNames;
+
         this.rolUser = rolUser;
         this.rolUserStatusListener.next(rolUser);
         this.lastNameUserStatusListener.next(lastNameUser);

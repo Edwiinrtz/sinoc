@@ -11,6 +11,7 @@ import { authGuard } from './auth/auth.guard';
 import { CreateAppointsmentComponent } from "./appointments/create-appointsment/create-appointsment.component";
 import { MyAppointsmentsComponent } from './appointments/my-appointsments/my-appointsments.component';
 import { RequestOrderComponent } from "./request-order/request-order.component";
+import { RouteResolver } from "./resolvers/route.resolver";
 
 const routes: Routes = [
   {
@@ -28,7 +29,10 @@ const routes: Routes = [
   {
     path: 'inicio',
     component: DashboardComponent,
-    canActivate: [authGuard]
+    canActivate: [authGuard],
+    // resolve: {
+    //   data: RouteResolver
+    // }
   },
   {
     path: 'solicitar-cita',

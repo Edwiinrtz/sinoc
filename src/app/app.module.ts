@@ -36,6 +36,7 @@ import { MyAppointsmentsComponent } from './appointments/my-appointsments/my-app
 import { RequestOrderComponent } from './request-order/request-order.component';
 import { UniqueSede } from './appointments/filter-data-appointments';
 import { SingUpComponent } from './auth/singup/singup.component';
+import { RouteResolver } from './resolvers/route.resolver';
 
 
 @NgModule({
@@ -74,8 +75,9 @@ import { SingUpComponent } from './auth/singup/singup.component';
   ],
   providers: [
     {
-      provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true
-    }
+      provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true,
+    },
+    //RouteResolver
   ],
   bootstrap: [AppComponent]
 })

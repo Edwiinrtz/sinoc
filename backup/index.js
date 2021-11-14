@@ -90,16 +90,9 @@ app.post("/newquote",async (req,res)=>{
     response.done ? res.sendStatus(200) : res.status(400).send(response.message)
 })
 
-/*
-  Delete quote module implementation
-*/
-app.delete("/newquote/:id",async (req,res)=>{
-  let response = await controller.delQuote(req.body)
-  response.done ? res.status(200).send(response.info) : res.status(400).send(response.message)
-})
-
 //Todas- citas : _id: por usuario se identifica por cedula
 app.post("/myQuotes",async (req,res)=>{
+  console.log("server /myQuotes" , req.body)
   let response = await controller.getQuotes({id:req.body.id})
   response.done ? res.status(200).json(response.info) : res.status(400).send(response.message)
 })
@@ -136,5 +129,6 @@ app.post("/uploadfile",(req,res)=>{
 })
 
 app.listen(3000, () => {
+
   console.log("Server has been started")
 })

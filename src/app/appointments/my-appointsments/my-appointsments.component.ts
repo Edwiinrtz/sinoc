@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppointmentsService } from '../appointments.service';
-import { mergeMap } from  'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { CrearCita } from '../appointments-interfaces';
-import { Quote } from '@angular/compiler';
 import { authServices } from '../../auth/auth.services';
 
 @Component({
@@ -18,23 +16,21 @@ export class MyAppointsmentsComponent implements OnInit {
 
   public nameUser: string = this.authServices.getNameUser();
   public lastNamesUser: string = this.authServices.getLastNameUser();
+  public idUser = this.authServices.getIDuser();
 
   constructor(private AppointmentsService: AppointmentsService, private authServices: authServices) { }
 
   ngOnInit(): void {
 
-    this.AppointmentsService.getAppointments();
-    console.log("Data componente" , this.AppointmentsService.getAppointments());
+    this.AppointmentsService.getAppointments(this.idUser);
     this.myQuotesListener = this.AppointmentsService.getAppointmentsUpdateListener()
     .subscribe ( (Quotes: CrearCita[]) => {
       this.myQuotes = Quotes;
-      console.log("data Quotes::: " , Quotes);
     })
    }
 
    onDelete(citaId: string) {
-     console.log("_id>>>" , citaId)
-    //this.AppointmentsService.deletePost(postId);
+    this.AppointmentsService.deleteAppointment(citaId);
   }
 
 

@@ -83,7 +83,7 @@ signin = async (data) => {
     }
 }
 quote = async(data)=>{
-    //console.log(data)
+    console.log("valores de data quote:::::::::" , data);
     try{
         if(Object.keys(data).length!=10){
             throw new Error("some information is missing or you're sending more than needed information")
@@ -118,37 +118,14 @@ quote = async(data)=>{
 getQuotes = async (filters) =>{
     let quotes = await quoteModel.find(filters).exec()
 
-
     if(quotes.length < 1 ) return {"done":false,"message":"There are not quotes"}
 
     return {"done":true,"info":quotes}
 
 }
-/*
-    modulo para eliminar citas medicas por usuario,
-    actualmente se recibe  como filtro:
-    - id del usuario
-    - place
-    - requested_doctor
-    - available_date
-    - available_time
-    ----------------
-    puede agregar cualquier parametro
-    ----------------
-    o Incluso podria filtrarse por el ID del qoute
-*/
-delQuote = async (filters) =>{
-    let quotes = await quoteModel.findOneAndDelete(filters).exec()
-    //console.log(quotes)
-    if(quotes == null ) {
-        return {"done":false,"message":"There are not quotes by the matching criteria"}
-    }
-
-    return {"done":true,"info":"Quote has been deleted succesfully"}
-
-}
 
 appointment = async(data)=>{
+    console.log("data controlador:" , data)
     try{
         filter = {
             place:data.place,
@@ -184,6 +161,5 @@ module.exports = {
     quote: quote,
     getQuotes:getQuotes,
     appointment:appointment,
-    getAppointments:getAppointments,
-    delQuote:delQuote
+    getAppointments:getAppointments
 }
